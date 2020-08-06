@@ -10,9 +10,11 @@ __Vollmer, F.W., 2020. Representing progressive fabric paths on a
   triangular plot using a fabric density index and crystal axes 
   eigenvector barycenters. Geological Society of America Abstracts with
   Proggrams, v. 51, submitted.__
+  
 __Vollmer F.W., 1990. An application of eigenvalue methods to structural 
   domain analysis. Geological Society of America Bulletin, v. 102, n. 6,
   786?791, ISSN 00167606__
+  
 __Vollmer F.W., 1989. A triangular fabric plot with applications for 
   structural analysis. EOS Transactions American Geophysical Union 
   70:463__
