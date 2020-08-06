@@ -1,5 +1,5 @@
 # PGRPlot
-Program for plotting triangular fabric (PGR or Vollmer) plots from eigenvalues of orientation tensors of directional data. Additional files include example data files used in Vollmer 2002. 
+MATLAB script for plotting triangular fabric (PGR or Vollmer) plots from eigenvalues of orientation tensors of directional data based on algorithms presented in Vollmer (1989, 1990, 2020). Additional files include example data files used in Vollmer (2020). 
 
 ---
 
@@ -22,7 +22,7 @@ __Vollmer F.W., 1989. A triangular fabric plot with applications for
 One or more of these should be cited by publications using this code, algorithm, or derivative works, to produce figures or other content. 
 
 ## License
-Please see the [LICENSE](LICENSE.md) and [CITATION](CITATION.md) for license and citation information.
+See the [LICENSE](LICENSE.md) and [CITATION](CITATION.md) for license and citation information.
 
 ## Download
 [PGRPlot](https://github.com/vollmerf/pgrplot)
