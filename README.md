@@ -1,5 +1,5 @@
 # PGRPlot
-Program for plotting triangular fabric (PGR or Vollmer) plots from eigenvalues of orientation tensors of directional data. Additional files include data files used in Vollmer 2002. 
+Program for plotting triangular fabric (PGR or Vollmer) plots from eigenvalues of orientation tensors of directional data. Additional files include example data files used in Vollmer 2002. 
 
 ---
 
@@ -28,7 +28,7 @@ information.
 [PGRPlot](https://github.com/vollmerf/pgrplot)
 
 ## Related Software
-The program [Orient](https://vollmerf.github.io/orient/) by this author is free software that includes this functionality, and numerous additional options. It runs on Macintosh, Windows, and Linux platforms: 
+The program [Orient](https://vollmerf.github.io/orient/) by this author is free software that includes this functionality, and numerous additional options. It runs on Macintosh, Windows, and Linux platforms.
 
 --- 
 
