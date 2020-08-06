@@ -24,6 +24,7 @@ One or more of these should be cited by publications using this code, algorithm,
 ## License
 Please see the [LICENSE](LICENSE.md) and [CITATION](CITATION.md) for license and citation information.
 
+## Download
 [PGRPlot](https://github.com/vollmerf/pgrplot)
 
 ## Related Software
