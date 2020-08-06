@@ -22,8 +22,7 @@ __Vollmer F.W., 1989. A triangular fabric plot with applications for
 One or more of these should be cited by publications using this code, algorithm, or derivative works, to produce figures or other content. 
 
 ## License
-Please see the LICENSE and CITATION files for license restrictions and citation 
-information.
+Please see the [LICENSE](LICENSE.md) and [CITATION](CITATION.md) for license and citation information.
 
 [PGRPlot](https://github.com/vollmerf/pgrplot)
 
