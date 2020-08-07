@@ -1,8 +1,8 @@
-% File    : pgrdensity.m
+% File    : trifabdensity.m
 % System  : MATLAB
-% Purpose : Triangular PGR fabric plots.
+% Purpose : Triangular fabric (PGR or Vollmer) plots.
 % Author  : Frederick W. Vollmer
-% Date    : Aug 6, 2020
+% Date    : Aug 7, 2020
 % Notice  : Copyright (c) 2020 Frederick W. Vollmer 
 % License : See LICENSE
 %
@@ -24,8 +24,8 @@
 % One or more should be cited for usage of this or derivative code.
 %-------------------------------------------------------------------------
 
-function [x,y,z] = pgrdensity(n, err, opts, expect)
-% PGRDENSITY  Returns a grid of density for a triangular fabric plot.
+function [x,y,z] = trifabdensity(n, err, opts, expect)
+% TRIFABDENSITY  Returns a grid of density for a triangular fabric plot.
 %   Returns [x,y,z] vectors with lengths of n. [x, y] values are in the 
 %   range [-1,-1] to [1,1], the [x,y] coordinates are converted to [P,G,R] 
 %   indexes, and then eigenvalues to calculate the fabric density index, 
@@ -35,18 +35,15 @@ function [x,y,z] = pgrdensity(n, err, opts, expect)
 %   err = Error allowed in PGR indexes at plot margins, this is used to 
 %     avoid edge effects when contouring. Trial and error may be required. 
 %     For n=150, err=0.005 works well.
-%   opts 
-%     0 = Return density index.
-%     1 = Return intensity index.
-%     2 = Return expected density index, expect must be protolith 
-%         eigenvalues.
-%     3 = Return expected intensity index, expect must be protolith 
-%         eigenvalues.
-%
+%   opts = Sets returned index:
+%     0 = Density
+%     1 = Intensity
+%     2 = Expected density, expect must be protolith eigenvalues
+%     3 = Expected intensity, expect must be protolith eigenvalues
   x = zeros(n,n);
   y = zeros(n,n);
   z = zeros(n,n);
-  inc = 2.0/(n-1);
+  inc = 2.0/(n-1); % [-1,-1] to [1,1]
   xi = -1.0;
   for i = 1:n
     yi = -1.0;
@@ -76,7 +73,6 @@ function [d] = densityxy(x, y, err, opts, expect)
 %         eigenvalues.
 %     3 = Return expected intensity index, expect must be protolith 
 %         eigenvalues (Hunter 2014).
-%
   r = 0.0;
   p = 0.0;
   g = 0.0;
@@ -85,7 +81,7 @@ function [d] = densityxy(x, y, err, opts, expect)
     d = NaN;
   else
     e = pgrtoeigen(p, g, r);
-    if opts > 1 % expected protolith , 2 or 3
+    if opts > 1 % expected, 2 or 3
       e1 = e(1) - expect(1);
       e2 = e(2) - expect(2);
       e3 = e(3) - expect(3);
@@ -97,7 +93,7 @@ function [d] = densityxy(x, y, err, opts, expect)
     ss = e1*e1 + e2*e2 + e3*e3;
     if rem(opts, 2) % 1 or 3
       d = 7.5 * ss; % intensity 
-    else    
+    else % 0 or 2   
       d = sqrt(1.5 * ss); % density 
     end
   end
@@ -122,10 +118,8 @@ function [a,b,c] = xytotri(x, y, apexUp, err)
 %       b = [-sqrt(3)/2,-1/2]
 %       c = [+sqrt(3)/2,-1/2]
 %     For apexUp = false the y values are negated. 
-%   err = Allowed error in a+b+c=1 while still returning a value. Used to 
-%     prevents edge effects during, and may require adjustment for a given 
-%     plot. 
-%
+%   err = Allowed error in a+b+c=1 to return a value. Used to prevent edge 
+%     effects during, and may require adjustment for a given plot. 
   a = 0;
   b = 0;
   c = 0;

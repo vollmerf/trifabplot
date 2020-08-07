@@ -1,6 +1,6 @@
-% File    : pgrplot.m
+% File    : trifabplot.m
 % System  : MATLAB
-% Purpose : Triangular PGR fabric plots.
+% Purpose : Triangular fabric (PGR or Vollmer) plots.
 % Author  : Frederick W. Vollmer
 % Date    : Aug 6, 2020
 % Notice  : Copyright (c) 2020 Frederick W. Vollmer 
@@ -24,11 +24,11 @@
 % One or more should be cited for usage of this or derivative code.
 %-------------------------------------------------------------------------
 
-function [pgr, points, frame] = pgrplot(eig)
-% PGRPLOT  Returns data to draw a triangular fabric plot.
+function [pgr, points, frame] = trifabplot(eig)
+% TRIFABPLOT  Returns data to draw a triangular fabric plot.
 %   eig = Normalized eigenvalues of the fabric orientation matrix.
 %   pgr = PGR indexes of the eigenvalues.
-%   points = [x,y] cordinates for the PGR plot.
+%   points = [x,y] Cartesian cordinates of plot symbols.
 %   frame = Coordinates of the triangular frame enclosed within a unit 
 %     circumcircle centered at [0,0].
   n = length(eig);
@@ -64,10 +64,10 @@ function [xy] = triframe(apexUp)
 end
   
 function [xy] = tritoxy(abc, apexUp)
-% triToXY  Convert triangular coordinates to Cartesian. 
-% Plot is scaled to a height of 1.5 and centered in a unit circumcircle 
-% with the origin at [0,0]. a and b are assumed to be normalized, so 
-% a+b+c = 1 where [a,b,c] = abc. 
+% TRITOXY  Convert triangular coordinates to Cartesian. 
+%   Plot is scaled to a height of 1.5 and centered in a unit circumcircle 
+%   with the origin at [0,0]. a and b are assumed to be normalized, so 
+%   a+b+c = 1 where [a,b,c] = abc. 
   irt3 = 0.577350269189626; % 1/(sqrt 3);
   xy(2) = abc(1); 
   xy(1) = (1.0 - abc(1) - 2.0 * abc(2)) * irt3;
@@ -80,11 +80,10 @@ function [xy] = tritoxy(abc, apexUp)
 end
 
 function [xy] = pgrtoxy(pgr)
-% pgrtoxy  Convert triangular PGR coordinates to Cartesian. 
-  t(1) = pgr(3); % r
-  t(2) = pgr(1); % p
-  t(3) = pgr(2); % g
+% PGRTOXY  Convert triangular PGR coordinates to Cartesian. 
+  t(1) = pgr(3); % a = r, bottom
+  t(2) = pgr(1); % b = p, top left
+  t(3) = pgr(2); % c = g, top right
   xy = tritoxy(t, false);
 end
-
 

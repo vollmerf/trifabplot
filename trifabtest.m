@@ -1,6 +1,6 @@
-% File    : pgrtest.m
+% File    : trifabtest.m
 % System  : MATLAB
-% Purpose : Test program for pgrplot.m and pgrdensity.m
+% Purpose : Test program for trifabplot.m and trifabdensity.m
 % Author  : Frederick W. Vollmer
 % Date    : Aug 6, 2020
 % Notice  : Copyright (c) 2020 Frederick W. Vollmer 
@@ -40,8 +40,11 @@
 %
 %   e1,e2,e3,weight
 %
-% where [e1,e2,e3] are the normalized eigenvalues of the orientation
-% tensor, and weight is a value used to determine the symbol color.
+% where [e1,e2,e3] are the normalized eigenvalues of the fabric 
+% orientation tensor, and weight is a value used to interpolate the symbol 
+% colors. The example data files use shear strain (olbary-Hansen2014.csv) 
+% and a domain (0 to 4) based on distance into a shear zone 
+% (qtz-Hunter2019.csv) weights.
 %-------------------------------------------------------------------------
 
 % get comma delimited test file of e1,e2,e3,weight
@@ -49,31 +52,29 @@
 eig = csvread(['olbary-Hansen2014.csv']); % olivine barycenters
 %eig = csvread(['qtz-Hunter2019.csv']); % quartz c-axes
 
-wt = eig(:,4); % weights for symbol color
-
 % create a linear color map from white to red
 lc = 256;
-c1 = [1, 1, 1];
-c2 = [1, 0, 0];
+c1 = [1,1,1];
+c2 = [1,0,0];
 clin = [linspace(c1(1),c2(1),lc)', linspace(c1(2),c2(2),lc)', ... 
         linspace(c1(3),c2(3),lc)'];
-% map weights to colors 
+    
+% interpolate weights to colors 
+wt = eig(:,4); % weights 
 cwt = round((wt/max(wt))*(lc-1)+1); % scale weights to 1..lc
-lw = length(wt);
-clr = ones(lw,3);
-for i=1:lw
-  clr(i,:) = clin(cwt(i),:); % get color scaled to weight
-end;     
+lwt = length(wt);
+c = ones(lwt,3);
+c(:,:) = clin(cwt(:),:); % get color scaled to weight
 
 % get point coordinates and frame
-[pgr, points, frame] = pgrplot(eig);
+[pgr,points,frame] = trifabplot(eig);
 
 % get grid of the density index
-expect = eig(1:1,1:3); % set expected, used for options 2 and 3 
+expect = eig(1:1,1:3); % set expected for options 2 and 3 
 ng = 150; % number of grid nodes
-err = 0.005; % adjust if contour lines do not end at frame 
+err = 0.005; % adjust if lines do not end at frame 
 opt = 0; % options are 0 to 3
-[x,y,z] = pgrdensity(ng, err, opt, expect); 
+[x,y,z] = trifabdensity(ng, err, opt, expect); 
 
 % set up figure
 figure;
@@ -88,7 +89,7 @@ contour(x,y,z,9,'Color',[.4 .4 .4]);
 % plot points
 px = points(:,1); 
 py = points(:,2); 
-scatter(px, py, 72, clr, 'filled', 'MarkerEdgeColor', 'k');
+scatter(px, py, 72, c, 'filled', 'MarkerEdgeColor', 'k');
 
 % plot triangular frame, array of [x,y]
 for i = 1:3
