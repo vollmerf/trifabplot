@@ -1,3 +1,32 @@
+function [x,y,z] = trifabdensity(n, err, opts, expect)
+% TRIFABDENSITY  Returns a grid of density for a triangular fabric plot.
+%   Returns a grid as [x,y,z] where [x, y] values are in the range [-1,-1] 
+%   to [1,1]. [x,y] are converted to [P,G,R] indexes (Vollmer 1989, 1990), 
+%   and eigenvalues to calculate the fabric density index, D 
+%   (Vollmer 2020), in [z]. 
+%
+% Input
+%   n = Number of grid nodes calculated in [x,y] between [-1,-1 and [1.1].
+%   err = Error allowed in PGR indexes at plot margins, is used to 
+%     avoid edge effects when contouring. For n=150, err=0.005 works,
+%     adjustment may be required.
+%   opts = Sets returned index:
+%     0 = Density
+%     1 = Intensity
+%     2 = Expected density, expect must be protolith eigenvalues
+%     3 = Expected intensity, expect must be protolith eigenvalues
+%
+% Output
+%   [x,y] = Values in the range [-1,-1] to [1,1]
+%   [z]   = Fabric density or intensity index if [x,y] is on triangle, 
+%           otherwise NaN. 
+%
+% Syntax
+%   [x,y,z] = trifabdensity();
+%   [x,y,z] = trifabdensity(150,0.005,1);
+%   [x,y,z] = trifabdensity(159,0.005,2,[0.2,0.2,0.6]);
+
+% END HELP
 % File    : trifabdensity.m
 % System  : MATLAB
 % Purpose : Triangular fabric (PGR or Vollmer) plots.
@@ -24,22 +53,28 @@
 % One or more should be cited for usage of this or derivative code.
 %-------------------------------------------------------------------------
 
-function [x,y,z] = trifabdensity(n, err, opts, expect)
-% TRIFABDENSITY  Returns a grid of density for a triangular fabric plot.
-%   Returns [x,y,z] vectors with lengths of n. [x, y] values are in the 
-%   range [-1,-1] to [1,1], the [x,y] coordinates are converted to [P,G,R] 
-%   indexes, and then eigenvalues to calculate the fabric density index, 
-%   D (Vollmer, 2020), in [z]. [x,y] points outside of the triangle return 
-%   z = NaN. 
-%   n = Number of grid nodes in x and y between -1 an 1.
-%   err = Error allowed in PGR indexes at plot margins, this is used to 
-%     avoid edge effects when contouring. Trial and error may be required. 
-%     For n=150, err=0.005 works well.
-%   opts = Sets returned index:
-%     0 = Density
-%     1 = Intensity
-%     2 = Expected density, expect must be protolith eigenvalues
-%     3 = Expected intensity, expect must be protolith eigenvalues
+
+  switch nargin
+    % n, err, opts, expect
+    case 0
+      n = 150;
+      err = 0.005;
+      opts = 0;
+      expect = [1/3,1/3,1/3];
+    case 1
+      err = 0.005;
+      opts = 0;
+      expect = [1/3,1/3,1/3];
+    case 2
+      opts = 0;
+      expect = [1/3,1/3,1/3];
+    case 3
+      expect = [1/3,1/3,1/3];
+    case 4
+      opts = opts;
+    otherwise
+      return
+  end  
   x = zeros(n,n);
   y = zeros(n,n);
   z = zeros(n,n);
@@ -48,7 +83,7 @@ function [x,y,z] = trifabdensity(n, err, opts, expect)
   for i = 1:n
     yi = -1.0;
     for j = 1:n
-      zi = densityxy(xi, yi, err, opts, expect); 
+      zi = densityXY(xi, yi, err, opts, expect); 
       x(i,j) = xi;
       y(i,j) = yi;
       z(i,j) = zi;
@@ -58,7 +93,7 @@ function [x,y,z] = trifabdensity(n, err, opts, expect)
   end
 end
 
-function [d] = densityxy(x, y, err, opts, expect)
+function [d] = densityXY(x, y, err, opts, expect)
 % DENSITYXY  Returns the fabric density index for [x,y] on unit triangle.
 %   NaN is returned for points off the triangle more than +/- err.
 %   [x,y] = Cartesian coordinates in the range [-1,-1] to [1,1] that 
@@ -76,11 +111,11 @@ function [d] = densityxy(x, y, err, opts, expect)
   r = 0.0;
   p = 0.0;
   g = 0.0;
-  [r, p, g] = xytotri(x, y, false, err); % apex down
+  [r, p, g] = XYToTri(x, y, false, err); % apex down
   if (r + p + g) == 0.0 % not on plot
     d = NaN;
   else
-    e = pgrtoeigen(p, g, r);
+    e = PGRToEigen(p, g, r);
     if opts > 1 % expected, 2 or 3
       e1 = e(1) - expect(1);
       e2 = e(2) - expect(2);
@@ -99,14 +134,14 @@ function [d] = densityxy(x, y, err, opts, expect)
   end
 end
 
-function [e] = pgrtoeigen(p, g, r)
+function [e] = PGRToEigen(p, g, r)
 % PGRTOEIGEN  Converts PGR indexes to eigenvalues.
   e(3) = r/3.0;
   e(2) = g*0.5 + e(3);
   e(1) = p + e(2);
 end
 
-function [a,b,c] = xytotri(x, y, apexUp, err)
+function [a,b,c] = XYToTri(x, y, apexUp, err)
 % XYTOTRI  Converts [x,y] to triangular coordinates.
 %   Converts [x,y] in the range [-1,-1] to [1,1] to triangular coordinates, 
 %   [a,b,c]. The plot is scaled to a height of 1.5 to give a unit 
@@ -148,4 +183,3 @@ function [a,b,c] = xytotri(x, y, apexUp, err)
   b = bt;
   c = ct;
 end
-

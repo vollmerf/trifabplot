@@ -1,8 +1,26 @@
+function [pgr, points, frame] = trifabplot(eig)
+% TRIFABPLOT  Returns Cartesian coordinates of symbols for a triangular 
+% fabric plot (Vollmer 1989, 1990).
+%
+% Input
+%   eig    = Vector of normalized eigenvalues of fabric orientation 
+%            matrixes, with [e1,e2,e3] as rows.
+%
+% Output
+%   pgr    = PGR indexes of the eigenvalues.
+%   points = [x,y] Cartesian cordinates of triangular plot symbols.
+%   frame  = Coordinates of the triangular frame enclosed within a unit 
+%            circumcircle centered at [0,0].
+%
+% Syntax
+%    [pgr,points,frame] = trifabplot(eig);
+
+% END HELP
 % File    : trifabplot.m
 % System  : MATLAB
 % Purpose : Triangular fabric (PGR or Vollmer) plots.
 % Author  : Frederick W. Vollmer
-% Date    : Aug 6, 2020
+% Date    : Aug 7, 2020
 % Notice  : Copyright (c) 2020 Frederick W. Vollmer 
 % License : See LICENSE
 %
@@ -24,13 +42,6 @@
 % One or more should be cited for usage of this or derivative code.
 %-------------------------------------------------------------------------
 
-function [pgr, points, frame] = trifabplot(eig)
-% TRIFABPLOT  Returns data to draw a triangular fabric plot.
-%   eig = Normalized eigenvalues of the fabric orientation matrix.
-%   pgr = PGR indexes of the eigenvalues.
-%   points = [x,y] Cartesian cordinates of plot symbols.
-%   frame = Coordinates of the triangular frame enclosed within a unit 
-%     circumcircle centered at [0,0].
   n = length(eig);
   for i = 1:n
     pgr(i,:) = eigentopgr(eig(i,:));
