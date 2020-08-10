@@ -1,6 +1,8 @@
 # TriFabPlot
 MATLAB script for plotting triangular fabric plots from eigenvalues of orientation tensors of directional data based on algorithms presented in Vollmer (1989, 1990, 2020). Additional files include example data files used in Vollmer (2020). 
 
+![OlBary](images/olbary_200.png)
+
 ---
 
 ## Citation
@@ -26,8 +28,6 @@ See the [LICENSE](LICENSE.md) and [CITATION](CITATION.md) for license and citati
 
 ## Download
 [TriFabPlot](https://github.com/vollmerf/trifabplot/)
-
-![OlBary](images/olbary_200.png)
 
 ## Related Software
 The program [Orient](https://vollmerf.github.io/orient/) by this author is free software that includes this functionality, and numerous additional options. It runs on Macintosh, Windows, and Linux platforms.
