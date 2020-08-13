@@ -24,10 +24,10 @@ __Vollmer F.W., 1989. A triangular fabric plot with applications for
 One or more of these should be cited by publications using this code, algorithm, or derivative works, to produce figures or other content. 
 
 ## License
-See the [LICENSE](LICENSE.md) and [CITATION](CITATION.md) for license and citation information.
+See [LICENSE](LICENSE.md) and [CITATION](CITATION.md) for license and citation information.
 
 ## Download
-[TriFabPlot](https://github.com/vollmerf/trifabplot/)
+[TriFabPlot](https://github.com/vollmerf/trifabplot/releases/tag/v1.0.0)
 
 ## Related Software
 The program [Orient](https://vollmerf.github.io/orient/) by this author is free software that includes this functionality, and numerous additional options. It runs on Macintosh, Windows, and Linux platforms.
