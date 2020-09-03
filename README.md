@@ -11,7 +11,7 @@ This repostory contains MATLAB implementations of algorithms presented in:
 __Vollmer, F.W., 2020. Representing progressive fabric paths on a 
   triangular plot using a fabric density index and crystal axes 
   eigenvector barycenters. Geological Society of America Abstracts with
-  Proggrams, v. 51, submitted.__
+  Programs, v. 51, submitted.__
   
 __Vollmer F.W., 1990. An application of eigenvalue methods to structural 
   domain analysis. Geological Society of America Bulletin, v. 102, n. 6,
